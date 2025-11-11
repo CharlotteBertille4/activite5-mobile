@@ -237,6 +237,54 @@ class _RedacteursInterfaceState extends State<RedacteursInterface> {
             const SizedBox(height: 16),
 
             // Liste des rédacteurs (expand)
+            Expanded(
+              child: _redacteurs.isEmpty
+                  ? const Center(
+                      child: Text(
+                        'Aucun rédacteur enregistré',
+                        style: TextStyle(fontSize: 16, color: Colors.grey),
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: _redacteurs.length,
+                      itemBuilder: (context, index) {
+                        final redacteur = _redacteurs[index];
+                        return Card(
+                          margin: const EdgeInsets.symmetric(vertical: 4),
+                          child: ListTile(
+                            title: Text(
+                              '${redacteur.prenom} ${redacteur.nom}',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            subtitle: Text(redacteur.email),
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                  icon: const Icon(
+                                    Icons.edit,
+                                    color: Colors.blue,
+                                  ),
+                                  onPressed: () =>
+                                      _modifierRedacteur(redacteur),
+                                ),
+                                IconButton(
+                                  icon: const Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                  ),
+                                  onPressed: () =>
+                                      _supprimerRedacteur(redacteur),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+            ),
           ],
         ),
       ),
